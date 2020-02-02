@@ -1,34 +1,18 @@
 import pandas as pd
 
-class ExcelLib:
+filePath = "F:\\Study\\RobotFramework\\RF_Pilot\\TestAsset\\DataTables\\"
 
-	def readFile(self, filePath, sheetName):
-		df = pd.read_excel(filePath, sheetName, header=0, index_col=0)
-		#print(df)
-		return df
-
-	def readCol(self, df):
-		colms = df.columns
-		print(colms)
-
-	def readRow(self, df, rowId):
-		rowIndex = df.loc[rowId]
-		return rowIndex
-
-	def readCell(self, rowIndex):		
-		print(str(rowIndex['Name']))
+def readRow(fileDetail, rowId):
+	fileName = filePath + fileDetail.split('.')[0] + ".xlsx"
+	sheetName = fileDetail.split('.')[1]
+	dataframe = pd.read_excel(fileName, sheetName)
+	#df.set_index("TestCaseName", inplace=True)
+	rowDict = dataframe.set_index('TestCaseName').T.to_dict('dict')[rowId]
+	return rowDict
 
 
 ### Add validation to check if file present
 ### Add validation to check sheet exists
 ### Add validation to check if column exists
 
-if __name__ == "__main__":
-
-	filePath = "F:\\Study\\RobotFramework\\RF_Pilot\\TestAsset\\DataTables\\DataTable.xlsx"
-	obj = ExcelLib()
-	df= obj.readFile(filePath, "Data")
-	rowIndex= obj.readRow(df, 'TC_01')
-	#print(rowIndex)
-	obj.readCell(rowIndex)
 
